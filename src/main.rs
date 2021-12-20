@@ -2,9 +2,10 @@ use std::{env, fs};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    let args = Config::new(&args);
 
-    let query = &args[1];
-    let filename = &args[2];
+    let query = &args.query;
+    let filename = &args.filename;
 
     println!("Searching for {}", query);
     println!("In fle {}", filename);
@@ -14,14 +15,16 @@ fn main() {
     println!("With text:\n{}", contents);
 }
 
-fn parse_config<'a>(args: &'a [&str]) -> Config<'a> {
-    let query = args[1];
-    let filename = args[2];
-
-    Config { query, filename }
-}
-
 struct Config<'a> {
     query: &'a str,
     filename: &'a str,
+}
+
+impl<'a> Config<'a> {
+    fn new(args: &'a [String]) -> Config<'a> {
+        let query = &args[1];
+        let filename = &args[2];
+
+        Config { query, filename }
+    }
 }
