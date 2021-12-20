@@ -13,3 +13,15 @@ fn main() {
 
     println!("With text:\n{}", contents);
 }
+
+fn parse_config<'a>(args: &'a [&str]) -> Config<'a> {
+    let query = args[1];
+    let filename = args[2];
+
+    Config { query, filename }
+}
+
+struct Config<'a> {
+    query: &'a str,
+    filename: &'a str,
+}
